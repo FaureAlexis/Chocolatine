@@ -4,7 +4,7 @@ env:
   MIRROR_URL: ""
   EXECUTABLES: ""
 
-on: [push]
+on: push
   pull_request:
     branches-ignore:
       - 'ga-ignore-**'
