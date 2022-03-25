@@ -1,9 +1,8 @@
 name: Chocolatine
-on: workflow-dispatch
-  pull_request:
+on:
+  push:
     branches-ignore:
       - 'ga-ignore-**'
-on: [push]
 jobs:
   check_repository_cleanliness:
     runs-on: ubuntu-latest
