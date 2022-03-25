@@ -3,27 +3,29 @@ on:
   push:
     branches-ignore:
       - 'ga-ignore-**'
-    jobs:
-      check_repository_cleanliness:
-        runs-on: ubuntu-latest
-        steps:
-          - uses : actions/checkout@v2
-            with:
-              fetch-depth: 0
-      check_repository_compilation:
-        needs: check_repository_cleanliness
-        env:
-          MIRROR_URL: ""
-          EXECUTABLES: ""
-        runs-on: ubuntu-latest
-        container:
-          image: epitechcontent/epitest-docker:latest
-        steps:
-          - uses : actions/checkout@v2
-            with:
-              fetch-depth: 0
-        - run: make
-        - run: make clean
-        - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
+      
+jobs:
+  check_repository_cleanliness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses : actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+   check_repository_compilation:
+    needs: check_repository_cleanliness
+    env:
+      MIRROR_URL: ""
+      EXECUTABLES: ""
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses : actions/checkout@v2
+        with:
+          fetch-depth: 0
+    - run: make
+    - run: make clean
+    - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
 
 
