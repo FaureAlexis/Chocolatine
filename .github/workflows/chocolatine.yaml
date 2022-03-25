@@ -4,6 +4,12 @@ env:
   MIRROR_URL: ""
   EXECUTABLES: ""
 
+on: [push]
+  workflow_dispatch
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-**'
+
 jobs:
   check_repository_cleanliness:
     runs-on: ubuntu-latest
@@ -25,8 +31,3 @@ jobs:
     - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
 
 
-on: [push]
-  workflow_dispatch
-  pull_request:
-    branches-ignore:
-      - 'ga-ignore-**'
