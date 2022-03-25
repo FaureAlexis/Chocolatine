@@ -4,11 +4,11 @@ env:
   MIRROR_URL: ""
   EXECUTABLES: ""
 
-on: workflow-dispatch
+on: [workflow-dispatch]
   pull_request:
     branches-ignore:
       - 'ga-ignore-**'
-on: push
+on: [push]
 jobs:
   check_repository_cleanliness:
     runs-on: ubuntu-latest
