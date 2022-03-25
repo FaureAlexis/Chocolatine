@@ -1,0 +1,29 @@
+name: Chocolatine
+
+env:
+  MIRROR_URL: ""
+  EXECUTABLES: ""
+
+jobs:
+  check_repository_cleanliness:
+    runs-on: ubuntu-latest
+    steps:
+      - uses : actions/checkout@v2
+  check_repository_compilation:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses : actions/checkout@v2
+        with:
+          fetch-depth: 0
+    - run: make
+    - run: make clean
+    - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
+
+
+on: [push]
+  workflow_dispatch
+  pull_request:
+    branches-ignore:
+      - 'ga-ignore-**'
