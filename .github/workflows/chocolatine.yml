@@ -1,10 +1,5 @@
 name: Chocolatine
-
-env:
-  MIRROR_URL: ""
-  EXECUTABLES: ""
-
-on: [workflow-dispatch]
+on: workflow-dispatch
   pull_request:
     branches-ignore:
       - 'ga-ignore-**'
@@ -18,6 +13,9 @@ jobs:
           fetch-depth: 0
 
   check_repository_compilation:
+    env:
+      MIRROR_URL: ""
+      EXECUTABLES: ""
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
