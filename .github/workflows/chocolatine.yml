@@ -10,8 +10,9 @@ jobs:
       - uses : actions/checkout@v2
         with:
           fetch-depth: 0
-
-  check_repository_compilation:
+          
+   check_repository_compilation:
+    needs: check_repository_cleanliness
     env:
       MIRROR_URL: ""
       EXECUTABLES: ""
