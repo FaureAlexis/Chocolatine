@@ -3,7 +3,7 @@ on:
   push:
     branches-ignore:
       - 'ga-ignore-**'
-      
+
 jobs:
   check_repository_cleanliness:
     runs-on: ubuntu-latest
