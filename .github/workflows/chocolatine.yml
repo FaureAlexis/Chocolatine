@@ -7,7 +7,18 @@ on:
     branches-ignore:
       - 'ga-ignore-*'
 jobs:
+  check_program_cleanless:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - run: echo 'CLEAN'    
   check_program_compilation:
+    needs:
+      - check_program_cleanless
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
