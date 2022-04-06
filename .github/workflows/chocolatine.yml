@@ -3,9 +3,6 @@ env:
       MIRROR_URL: ""
       EXECUTABLES: choco
 on:
-  pull-request:
-    branches-ignore:
-      - 'ga-ignore-*'
   push:
     branches-ignore:
       - 'ga-ignore-*'
