@@ -18,7 +18,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: "find -name '#*#' -exec echo 'Unwanted file detected : {} \;' -o -name '*-' -exec echo 'Unwanted file detected : {} \;' -o -name '*pain_au_chocolat*' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.a' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.o' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcno' -exec echo 'Unwanted file detected : {} \;' -o -name '*.gcda' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcov' -exec echo 'Unwanted file detected : {} \;' "
+      - run: |
+      find -name '#*#' -exec echo 'Unwanted file detected : {} \;' -o -name '*-' -exec echo 'Unwanted file detected : {} \;' -o -name '*pain_au_chocolat*' -exec echo 'Unwanted file detected : \{}  \;'  -o -name '*.a' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.o' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcno' -exec echo 'Unwanted file detected : {} \ \;' -o -name '*.gcda' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcov' -exec echo 'Unwanted file detected : {} \;'
   check_program_compilation:
     needs:
       - check_program_cleanliness
