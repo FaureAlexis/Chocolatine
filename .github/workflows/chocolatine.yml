@@ -15,7 +15,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: find -name '#*#' -o -name '*-' -o -name '*pain_au_chocolat*' -o -name '*.a' -o -name '*.o' -o -name '*.gcno' -o -name '*.gcda' -o -name '*.gcov'
+      - run: |
+          UNWANTED_FILES=$(find . -type f -not -path "./git/*" -wholename "*tmp/*" -or -name "*~" -or -name "*.o" -or -name "*.so" -or -name "*.gcno" -or -name "*.gdca" -or -name "*.gcov" -or -name "*pain_au_chocolat*")
+          for FILES in $UNWANTED_FILES; do
+            echo "::error file=${FILE#./}, title=Unwanted file detected::${FILE#./}"
+          done
+          if [[ -n $UNWANTED_FILES ]]
+          then
+            exit 1
+          else
+            echo No unwanted files detected
+          fi
   check_program_compilation:
     needs:
       - check_program_cleanliness
