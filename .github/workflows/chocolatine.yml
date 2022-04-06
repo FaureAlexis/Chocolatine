@@ -23,7 +23,7 @@ jobs:
             if [ -f "$file" ]; then
               ext="${file##*.}"
               if [[ $ext != c ]] && [[ $ext != h ]] && [[ $file != *Makefile ]]; then
-                echo \'Unwanted file detected: $file\'
+                echo "Unwanted file detected: $file"
               fi
             fi
             if [ -d "$file" ]; then
