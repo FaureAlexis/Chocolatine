@@ -1,7 +1,7 @@
 name: Chocolatine
 env:
       MIRROR_URL: ""
-      EXECUTABLES: a.out,couscous,main
+      EXECUTABLES: choco,main
 on: 
   push:
     branches-ignore:
