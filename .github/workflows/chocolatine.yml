@@ -15,30 +15,12 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: 'repo=.
-        function check_file_in_folder()
-        {
-          for file in "$1"/*
-          do
-            if [ -f "$file" ]; then
-              ext="${file##*.}"
-              if [[ $ext != c ]] && [[ $ext != h ]] && [[ $file != *Makefile ]]; then
-                echo "Unwanted file detected: $file"
-              fi
-            fi
-            if [ -d "$file" ]; then
-              if [[ $file != bonus ]] && [[ $file != assets ]]; then
-                check_file_in_folder $file
-              fi
-            fi
-          done
-        }
-
-        check_file_in_folder $repo'
+      - run: find -name '#*#' -o -name '*-' -o -name '*pain_au_chocolat*' -o -name '*.a' -o -name '*.o' -o -name '*.gcno' -o -name '*.gcda' -o -name '*.gcov')"
   check_program_compilation:
     needs:
       - check_program_cleanless
     runs-on: ubuntu-latest
+    timeout-minutes: 2
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
