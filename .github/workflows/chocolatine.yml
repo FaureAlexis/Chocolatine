@@ -2,12 +2,15 @@ name: Chocolatine
 env:
       MIRROR_URL: ""
       EXECUTABLES: choco
-on: 
+on:
+  pull-request:
+    branches-ignore:
+      - 'ga-ignore-*'
   push:
     branches-ignore:
       - 'ga-ignore-*'
 jobs:
-  check_program_cleanless:
+  check_program_cleanliness:
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
@@ -15,12 +18,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - run: find -name '#*#' -o -name '*-' -o -name '*pain_au_chocolat*' -o -name '*.a' -o -name '*.o' -o -name '*.gcno' -o -name '*.gcda' -o -name '*.gcov'
+      - run: "find -name '#*#' -exec echo 'Unwanted file detected : {} \;' -o -name '*-' -exec echo 'Unwanted file detected : {} \;' -o -name '*pain_au_chocolat*' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.a' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.o' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcno' -exec echo 'Unwanted file detected : {} \;' -o -name '*.gcda' -exec echo 'Unwanted file detected : {} \;'  -o -name '*.gcov' -exec echo 'Unwanted file detected : {} \;' "
   check_program_compilation:
     needs:
-      - check_program_cleanless
+      - check_program_cleanliness
     runs-on: ubuntu-latest
-    timeout-minutes: 2
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
@@ -28,8 +30,9 @@ jobs:
       with:
         fetch-depth: 0
     - run: make
+      timeout-minutes: 2
     - run: make clean
-    - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
+    - run: for FILE in $EXECUTABLES; do test -f $FILE && echo '$FILE exist' ; done
   run_tests:
     needs:
       - check_program_compilation
