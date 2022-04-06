@@ -1,7 +1,13 @@
 name: Chocolatine
-on: [push]
+env:
+      MIRROR_URL: ""
+      EXECUTABLES: a.out,couscous,main
+on: 
+  push:
+    branches-ignore:
+      - 'ga-ignore-*'
 jobs:
-  compilation:
+  check_program_compilation:
     runs-on: ubuntu-latest
     container:
       image: epitechcontent/epitest-docker:latest
@@ -9,4 +15,6 @@ jobs:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
-    - run: make re
+    - run: make
+    - run: make clean
+    - run: for file in $EXECUTABLES; do test -f $file && echo '$file exist' ; done
