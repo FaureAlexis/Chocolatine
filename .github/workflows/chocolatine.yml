@@ -1,11 +1,11 @@
 name: Chocolatine
-env:
-      MIRROR_URL: ""
-      EXECUTABLES: choco
 on:
   push:
     branches-ignore:
-      - 'ga-ignore-*'
+    - "ga-ignore-*"
+  pull_request:
+    branches-ignore:
+    - "ga-ignore-*"
 jobs:
   check_program_cleanliness:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
     - run: make
       timeout-minutes: 2
     - run: make clean
-    - run: for FILE in $EXECUTABLES; do test -f $FILE && echo '$FILE exist' ; done
+    - run: for FILE in ${ GITHUB_ENV.EXECUTABLES }; do test -f $FILE && echo '$FILE exist' ; done
   run_tests:
     needs:
       - check_program_compilation
@@ -52,4 +52,17 @@ jobs:
       with:
         fetch-depth: 0
     - run: make tests_run    
-      
+  push_to_mirror:
+    needs: 
+      - run_tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: pixta-dev/repository-mirroring-action@v1
+      with:
+        target_repo_url:
+          ${{ GITHUB_ENV.MIRROR_URL }}
+        ssh_private_key:
+          ${{ secrets.GIT_SSH_PRIVATE_KEY }}

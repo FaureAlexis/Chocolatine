@@ -13,6 +13,6 @@ clean:
 	rm -f $(OBJ)
 
 tests_run:
-	gcc -o $(NAME) $(OBJ) -lcriterion --coverage 
+	gcc -o $(NAME) tests/test.c -lcriterion --coverage 
 
 .PHONY: all clean tests_run
