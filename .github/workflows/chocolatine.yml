@@ -41,7 +41,7 @@ jobs:
     - run: make
       timeout-minutes: 2
     - run: make clean
-    - run: for $FILE in $EXECUTABLES; do test -f $FILE && echo '$FILE exist' ; done
+    - run: for FILE in $EXECUTABLES; do test -f $FILE && echo '$FILE exist' ; done
   run_tests:
     needs:
       - check_program_compilation
